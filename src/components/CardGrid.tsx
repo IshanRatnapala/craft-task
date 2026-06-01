@@ -50,7 +50,7 @@ export const CardGrid = ({
         ? 'No employees match your search criteria.'
         : sortedEmployees.map((employee) => (
             <EmployeeCard
-              key={employee.id}
+              key={employee.id + employee.name} // Instead of fixing the JSON data, I opted for this to remove duplicate keys
               name={employee.name}
               role={employee.role}
               department={employee.department}
