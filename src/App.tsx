@@ -1,21 +1,16 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import './App.css';
 import type { Employee } from './types';
-import { getEmployees } from './api/employeeData';
-import { EmployeeCard } from './components/EmployeeCard';
+import { getDepartments, getEmployees } from './api/employeeData';
 import { CardGrid } from './components/CardGrid';
+import { Filters } from './components/Filters';
 
 function App() {
-  const [fetchPromise, setFetchPromise] = useState<Promise<Employee[]>>(() => getEmployees());
+  const [fetchPromise] = useState<Promise<Employee[]>>(() => getEmployees());
+  const [departmentsPromise] = useState<Promise<string[]>>(() => getDepartments());
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [departmentFilter, setDepartmentFilter] = useState<string>('');
   const [sortOption, setSortOption] = useState<string>('');
-
-  console.log({
-    searchQuery,
-    departmentFilter,
-    sortOption,
-  });
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -32,39 +27,21 @@ function App() {
   return (
     <main className="mx-auto flex flex-col max-w-6xl items-center min-h-screen py-10">
       <h1 className="text-3xl font-bold text-center">Employee Directory</h1>
-      <section className="my-6 flex gap-x-8 gap-y-4 w-full p-4">
-        {/* Search Bar */}
-        <input
-          type="text"
-          placeholder="Search employees by name or role..."
-          className="w-full max-w-md px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
-          onChange={(e) => handleSearch(e.target.value)}
-          value={searchQuery}
-        />
-        {/* Department filter dropdown */}
-        <select
-          className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 "
-          onChange={(e) => handleDepartmentFilter(e.target.value)}
-          value={departmentFilter}
-        >
-          <option value="">All Departments</option>
-          <option value="Departments">Departments</option>
-          {/* Departments from the JSON */}
-        </select>
-        {/* Sort Controls */}
-        <select
-          className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ml-auto w-40"
-          onChange={(e) => handleSort(e.target.value)}
-          value={sortOption}
-        >
-          <option value="">Sort By</option>
-          <option value="name-asc">Name (A-Z)</option>
-          <option value="name-desc">Name (Z-A)</option>
-          <option value="startDate-asc">Start Date (Oldest First)</option>
-          <option value="startDate-desc">Start Date (Newest First)</option>
-        </select>
+      <section className="my-6 w-full p-4">
+        <Suspense fallback={<div>Loading filters...</div>}>
+          <Filters
+            departmentsPromise={departmentsPromise}
+            searchQuery={searchQuery}
+            departmentFilter={departmentFilter}
+            sortOption={sortOption}
+            onSearch={handleSearch}
+            onDepartmentFilter={handleDepartmentFilter}
+            onSort={handleSort}
+          />
+        </Suspense>
       </section>
       <section className="my-6 flex gap-x-16 gap-y-4 w-full p-4">
+        {/* TODO: Add error boundary here */}
         <Suspense fallback={<div>Loading employees...</div>}>
           <CardGrid
             searchQuery={searchQuery}
