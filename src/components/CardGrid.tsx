@@ -19,6 +19,7 @@ export const CardGrid = ({
 
   const normalizedSearchQuery = searchQuery.trim().toLowerCase();
 
+  // React compiler should handle memoization here
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearch =
       employee.name.toLowerCase().includes(normalizedSearchQuery) ||
