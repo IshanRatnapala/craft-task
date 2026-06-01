@@ -5,25 +5,19 @@ import { getDepartments, getEmployees } from './api/employeeData';
 import { CardGrid } from './components/CardGrid';
 import { Filters } from './components/Filters';
 import { ErrorBoundary, getErrorMessage } from 'react-error-boundary';
+import { useFilters } from './hooks/useFilters';
 
 function App() {
   const [fetchPromise] = useState<Promise<Employee[]>>(() => getEmployees());
   const [departmentsPromise] = useState<Promise<string[]>>(() => getDepartments());
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [departmentFilter, setDepartmentFilter] = useState<string>('');
-  const [sortOption, setSortOption] = useState<string>('');
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const handleDepartmentFilter = (department: string) => {
-    setDepartmentFilter(department);
-  };
-
-  const handleSort = (sortOption: string) => {
-    setSortOption(sortOption);
-  };
+  const {
+    searchQuery,
+    departmentFilter,
+    sortOption,
+    handleSearch,
+    handleDepartmentFilter,
+    handleSort,
+  } = useFilters();
 
   return (
     <main className="mx-auto flex flex-col max-w-6xl items-center min-h-screen py-10">
