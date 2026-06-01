@@ -17,7 +17,7 @@ function App() {
           {/* Departments from the JSON */}
         </select>
         {/* Sort Controls */}
-        <select className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2">
+        <select className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ml-auto w-40">
           <option value="">Sort By</option>
           <option value="name-asc">Name (A-Z)</option>
           <option value="name-desc">Name (Z-A)</option>
