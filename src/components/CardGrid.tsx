@@ -44,8 +44,6 @@ export const CardGrid = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {/* TODO: remove */}
-      {searchQuery} {departmentFilter} {sortOption}
       {!sortedEmployees.length
         ? 'No employees match your search criteria.'
         : sortedEmployees.map((employee) => (
