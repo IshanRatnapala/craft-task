@@ -6,7 +6,7 @@ export interface Employee {
     status: EmployeeStatus;
     startDate: string;
     skills: string[];
-    avatar: string;
+    avatar: string | null;
 }
 
 export type EmployeeStatus = 'Active' | 'On Leave' | 'Probation';
