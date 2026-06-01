@@ -47,7 +47,7 @@ function App() {
           </Suspense>
         </ErrorBoundary>
       </section>
-      <section className="my-6 flex gap-x-16 gap-y-4 w-full p-4">
+      <section className="my-6 flex gap-x-16 gap-y-4 w-full p-4 justify-center">
         <ErrorBoundary
           fallbackRender={({ error }) => (
             <div className="text-center">{getErrorMessage(error)} </div>

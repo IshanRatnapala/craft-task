@@ -22,7 +22,7 @@ export const Filters = ({
   const departments = use(departmentsPromise);
 
   return (
-    <div className="flex gap-x-8 gap-y-4 ">
+    <div className="flex gap-x-8 gap-y-4 flex-wrap justify-center">
       {/* Search Bar */}
       <input
         type="text"
@@ -45,17 +45,23 @@ export const Filters = ({
         ))}
       </select>
       {/* Sort Controls */}
-      <select
-        className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ml-auto w-40"
-        onChange={(e) => onSort(e.target.value)}
-        value={sortOption}
-      >
-        <option value="">Sort By</option>
-        <option value="name-asc">Name (A-Z)</option>
-        <option value="name-desc">Name (Z-A)</option>
-        <option value="startDate-asc">Start Date (Oldest First)</option>
-        <option value="startDate-desc">Start Date (Newest First)</option>
-      </select>
+      <div>
+        <label htmlFor="sort" className="mr-2">
+          Sort By
+        </label>
+        <select
+          id="sort"
+          className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ml-auto w-40"
+          onChange={(e) => onSort(e.target.value)}
+          value={sortOption}
+        >
+          <option value="">Default</option>
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="name-desc">Name (Z-A)</option>
+          <option value="startDate-asc">Start Date (Oldest First)</option>
+          <option value="startDate-desc">Start Date (Newest First)</option>
+        </select>
+      </div>
     </div>
   );
 };
